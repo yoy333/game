@@ -19,7 +19,7 @@ body {
 	background-color: black;
 }
 
-#stage {
+.stage {
 	position: absolute;
 	display: inline-block;
 	left: 250px;
