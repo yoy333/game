@@ -63,3 +63,13 @@ function moveP_one(){
 	}
 
   })
+  }
+ function draw(){
+ 		gravity();
+    moveP_one();
+    requestAnimationFrame(draw);
+}
+  $(document).ready(function(){
+  	startUp();
+    draw();
+});
