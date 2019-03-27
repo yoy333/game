@@ -65,7 +65,7 @@ function moveP_one(){
   })
   }
  function draw(){
- 		gravity();
+ 	gravity();
     moveP_one();
     requestAnimationFrame(draw);
 }
