@@ -1,3 +1,4 @@
+var is = false
 var verticleMomentum = 0;
 var horizontalMomentum = 0;
 var stageTouch = true;
@@ -36,33 +37,29 @@ function moveP_one(){
   }
   cap();
   //physics
-  
 	$('div#P1').css('top', P_one_Att.top+verticleMomentum+'px')
   $('div#P1').css('left', P_one_Att.left+horizontalMomentum+'px')
-  if(touching('div#P1','div#barrier')||touching('div#P1', 'div.stage')){
-  	if(P_one_Att.right>250&&P_one_Att.left<750&&P_one_Att.right-horizontalMomentum>250&&P_one_Att.left+horizontalMomentum<750){
-    	$('div#P1').css("top", 440-P_one_Att.height+'px')
+  var P_one_Att = getpos('div#P1')
+  $('div.stage').each(function(){
+  	if(touching('div#P1', this)){
+    var stage_Att = getpos(this)
+  	if(P_one_Att.right>stage_Att.left&&P_one_Att.left<stage_Att.right&&P_one_Att.right-horizontalMomentum>stage_Att.left&&P_one_Att.left+P_one_Att.width+horizontalMomentum<stage_Att.right){
+    	$('div#P1').css("top", stage_Att.top-P_one_Att.height+'px')
       if(verticleMomentum>0){
       	verticleMomentum=0
       }
       stageTouch=true
-  	}else if(P_one_Att.bottom>440&&P_one_Att.top<540){
+  	}else if(P_one_Att.bottom>stage_Att.top&&P_one_Att.top<stage_Att.bottom){
     		if(horizontalMomentum>1){
-        		$('div#P1').css('left', 250-P_one_Att.width-1+'px')
+        		horizontalMomentum=0
+        		$('div#P1').css('left', stage_Att.left-P_one_Att.width-1+'px')
         }else if(horizontalMomentum<-1){
-        		$('div#P1').css('left', 750+1+'px')
+        		horizontalMomentum=0
+        		$('div#P1').css('left', stage_Att.right+1+'px')
         }
     }
   }else{
 		stageTouch=false
 	}
-}
- function draw(){
-    gravity();
-    moveP_one();
-    requestAnimationFrame(draw);
-  }
-  $(document).ready(function() {
-  	startUp();
-    draw();
-});
+
+  })
