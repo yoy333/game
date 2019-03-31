@@ -1,19 +1,17 @@
 body {
 	background-color: blue;
-	height: 600px;
-	width: 1000px;
-	overflow: hidden;
-	margin:0px;
-	display:inline-block;
 }
 
 #screen {
-	overflow:hidden;
-	display:inline-block;
+  position: absolute;
+  display: inline-block;
+  top: 20px;
+  left: 20px;
 	height: 600px;
 	width: 1000px;
 	background-color: #D2B48C;
 	border: 1px solid black;
+  overflow: hidden;
 }
 
 #P1 {
@@ -26,12 +24,42 @@ body {
 	background-color: black;
 }
 
-.stage {
-	position: absolute;
-	display: inline-block;
-	left: -250px;
-	top: 440px;
-	height: 100px;
-	width: 1500px;
-	background-color: white;
+#startS {
+  height: 600px;
+  width: 1000px;
+  background-color: #40e0d0;
+}
+
+#startB {
+  position: absolute;
+  display: inline-block;
+  left: 455px;
+  top: 370px;
+  height: 75px;
+  width: 150px;
+  text-align: center;
+  font-size: 35px;
+  padding-top: 5px;
+  background-color: white;
+  border: 2px solid black;
+  border-radius: 5px;
+}
+
+#stageS {
+  height: 600px;
+  width: 1000px;
+  background-color: #000D40;
+}
+
+#stageB {
+  position: absolute;
+  display: inline-block;
+  left: 300px;
+  top: 220px;
+  height: 50px;
+  width: 50px;
+  text-align: center;
+  padding-top: 5px;
+  background-color: gray;
+  border: 1px solid black;
 }
