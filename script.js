@@ -107,16 +107,9 @@ function touching(sharkDude, boatDude){
 var verticleMomentum = 0;
 var horizontalMomentum = 0;
 var stageTouch = true;
+var startChoise;
 function startUp(){
-		var x = $(window).height()
-		$('div#Bl').css('height', x+'px')
-    x = parseInt($('div#screen').css('left'))+1
-    $('div#Bl').css('width', x)
-    x = $(window).height()-parseInt($('div#screen').css('right'))-1
-		$('div#Br').css('width', x+'px')
-    x = $(window).height()
-    $('div#Br').css('width', x+'px')
-		$('#screen').append('<div class="stage"></div>')
+		$('#screen').append(startChoise)
 }
 function gravity(){
 	if(stageTouch==false){
@@ -156,32 +149,66 @@ function moveP_one(){
   	if(touching('div#P1', this)){
     var stage_Att = getpos(this)
   	if(P_one_Att.right>stage_Att.left&&P_one_Att.left<stage_Att.right&&P_one_Att.right-horizontalMomentum>stage_Att.left&&P_one_Att.left+P_one_Att.width+horizontalMomentum<stage_Att.right){
-    	$('div#P1').css("top", stage_Att.top-P_one_Att.height+'px')
       if(verticleMomentum>0){
+      	$('div#P1').css('top', stage_Att.top-P_one_Att.height+'px')
       	verticleMomentum=0
+        stageTouch = true
       }
-      stageTouch=true
+      if(verticleMomentum<0){
+      		$('div#P1').css('top', stage_Att.botom+'px')
+      		verticleMomentum=0
+      }
   	}else if(P_one_Att.bottom>stage_Att.top&&P_one_Att.top<stage_Att.bottom){
     		if(horizontalMomentum>1){
-        		horizontalMomentum=0
+        		horizondrawtalMomentum=0
         		$('div#P1').css('left', stage_Att.left-P_one_Att.width-1+'px')
         }else if(horizontalMomentum<-1){
         		horizontalMomentum=0
         		$('div#P1').css('left', stage_Att.right+1+'px')
         }
     }
-  }else{
-		stageTouch=false
-	}
+  }else {
+  		stageTouch=false
+  }
 
   })
   }
+  function sidescroll(){
+  	var P_one_Att = getpos('div#P1')
+  	if(P_one_Att.left<350){
+    		var obj_Att = getpos('div#P1')
+        if(horizontalMomentum<0){
+          $('div#P1').css('left', 350+'px')
+          $('div.stage').each(function(){
+          		var stage_Att = getpos(this)
+              $(this).css('left', stage_Att.left - horizontalMomentum+'px')
+          })
+        }
+    }
+    if(P_one_Att.right>650){
+    		var obj_Att = getpos('div#P1')
+        if(horizontalMomentum>0){
+          $('div#P1').css('left', 650-P_one_Att.width+'px')
+          $('div.stage').each(function(){
+          		var stage_Att = getpos(this)
+              $(this).css('left', stage_Att.left - horizontalMomentum+'px')
+          })
+        }
+    }
+  }
  function draw(){
  		gravity();
+    sidescroll();
     moveP_one();
     requestAnimationFrame(draw);
 }
-  $(document).ready(function(){
-  	startUp();
-    draw();
+$('#startB').click(function(){
+				$('#startS').remove()
+        $('#screen').append('<div id="stageS"><button id="stageB">demo</button></div>')
+        $('#stageB').click(function(){
+        		startChoise = '<div id="P1" class="grav"></div><div class="stage" style="position: absolute;display: inline-block;left: -250px;top: 440px;height: 100px;width: 1500px;background-color: white;">'
+            $('div#stageS').remove()
+        		startUp();
+            draw();
+        })
 });
