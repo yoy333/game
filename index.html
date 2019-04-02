@@ -1,108 +1,16 @@
-var verticleMomentum = 0;
-var horizontalMomentum = 0;
-var stageTouch = true;
-var startChoise;
-function startUp(){
-		$('#screen').append(startChoise)
-}
-function gravity(){
-	if(stageTouch==false){
-		verticleMomentum += 1;
-	}
-}
-function cap(){
-	if(horizontalMomentum>7){
-  	horizontalMomentum=7
-  }else if(horizontalMomentum<-7){
-  	horizontalMomentum = -7
-  }
-  if(verticleMomentum>13){
-  	verticleMomentum=13
-  }else if(verticleMomentum<-13){
-  		verticleMomententum=-13
-  }
-}
-function moveP_one(){
-	var P_one_Att = getpos('div#P1')
-  if(keys.w&&stageTouch){
-		verticleMomentum -= 17;
-	}
-  if(keys.a){
-  	horizontalMomentum -= 3
-  }else if(keys.d){
-  	horizontalMomentum += 3
-  }else{
-  	horizontalMomentum = 0
-  }
-  cap();
-  //physics
-	$('div#P1').css('top', P_one_Att.top+verticleMomentum+'px')
-  $('div#P1').css('left', P_one_Att.left+horizontalMomentum+'px')
-  var P_one_Att = getpos('div#P1')
-  $('div.stage').each(function(){
-  	if(touching('div#P1', this)){
-    var stage_Att = getpos(this)
-  	if(P_one_Att.right>stage_Att.left&&P_one_Att.left<stage_Att.right&&P_one_Att.right-horizontalMomentum>stage_Att.left&&P_one_Att.left+P_one_Att.width+horizontalMomentum<stage_Att.right){
-      if(verticleMomentum>0){
-      	$('div#P1').css('top', stage_Att.top-P_one_Att.height+'px')
-      	verticleMomentum=0
-        stageTouch = true
-      }
-      if(verticleMomentum<0){
-      		$('div#P1').css('top', stage_Att.botom+'px')
-      		verticleMomentum=0
-      }
-  	}else if(P_one_Att.bottom>stage_Att.top&&P_one_Att.top<stage_Att.bottom){
-    		if(horizontalMomentum>1){
-        		horizondrawtalMomentum=0
-        		$('div#P1').css('left', stage_Att.left-P_one_Att.width-1+'px')
-        }else if(horizontalMomentum<-1){
-        		horizontalMomentum=0
-        		$('div#P1').css('left', stage_Att.right+1+'px')
-        }
-    }
-  }else {
-  		stageTouch=false
-  }
-
-  })
-  }
-  function sidescroll(){
-  	var P_one_Att = getpos('div#P1')
-  	if(P_one_Att.left<350){
-    		var obj_Att = getpos('div#P1')
-        if(horizontalMomentum<0){
-          $('div#P1').css('left', 350+'px')
-          $('div.stage').each(function(){
-          		var stage_Att = getpos(this)
-              $(this).css('left', stage_Att.left - horizontalMomentum+'px')
-          })
-        }
-    }
-    if(P_one_Att.right>650){
-    		var obj_Att = getpos('div#P1')
-        if(horizontalMomentum>0){
-          $('div#P1').css('left', 650-P_one_Att.width+'px')
-          $('div.stage').each(function(){
-          		var stage_Att = getpos(this)
-              $(this).css('left', stage_Att.left - horizontalMomentum+'px')
-          })
-        }
-    }
-  }
- function draw(){
- 		gravity();
-    sidescroll();
-    moveP_one();
-    requestAnimationFrame(draw);
-}
-$('#startB').click(function(){
-				$('#startS').remove()
-        $('#screen').append('<div id="stageS"><button id="stageB">demo</button></div>')
-        $('#stageB').click(function(){
-        		startChoise = '<div id="P1" class="grav"></div><div class="stage" style="position: absolute;display: inline-block;left: -250px;top: 440px;height: 100px;width: 1500px;background-color: white;">'
-            $('div#stageS').remove()
-        		startUp();
-            draw();
-        })
-});
+<!DOCTYPE html>
+<html>
+	<head>
+			<title>Coding Game</title>
+			<link rel="stylesheet" type="text/css" href="style.css">	
+	</head>
+	<body>
+		<script type="text/javascript" src="jquery.js"></script>
+		<script type="text/javascript" src="keyboard.js"></script>
+		<script type="text/javascript" src="functions.js"></script>
+		<script type="text/javascript" src="script.js"></script>
+		<div id="screen">
+        <button id="startB">start</button>
+		</div>
+	</body>
+</html>
