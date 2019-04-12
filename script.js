@@ -2,7 +2,7 @@ var verticleMomentum = 0;
 var horizontalMomentum = 0;
 var stageTouch = true;
 function startUp(){
-		$('#screen').append('<div id="P1"></div><div class="stage" style="	left:-250px;top:440px;height:100px;width:1500px;"></div><div class="stage"></div>')
+		$('#screen').append('<div id="P1" class="grav"></div><div class="stage"></div><div class="stage"></div>')
 }
 function gravity(){
 	if(stageTouch==false){
@@ -38,7 +38,6 @@ function moveP_one(){
 	$('div#P1').css('top', P_one_Att.top+verticleMomentum+'px')
   $('div#P1').css('left', P_one_Att.left+horizontalMomentum+'px')
   var P_one_Att = getpos('div#P1')
-  stageTouch=false
   $('div.stage').each(function(){
   	if(touching('div#P1', this)){
     var stage_Att = getpos(this)
@@ -57,42 +56,40 @@ function moveP_one(){
         		$('div#P1').css('left', stage_Att.right+1+'px')
         }
     }
-  }
+  }else{
+		stageTouch=false
+	}
+
   })
   }
   function sidescroll(){
-  		var P_one_Att = getpos('div#P1')
-      		if(P_one_Att.left<350&&horizontalMomentum<0){
-          		$('div.stage').each(function(){
-              		var stage_Att = getpos(this)
-              		$(this).css('left', stage_Att.left-horizontalMomentum+'px')
-              })
-              $('div#P1').css('left', P_one_Att.left-horizontalMomentum+'px')
-          }
-          if(P_one_Att.right>650&&horizontalMomentum>0){
-          		$('div.stage').each(function(){
-              		var stage_Att = getpos(this)
-              		$(this).css('left', stage_Att.left-horizontalMomentum+'px')
-              })
-              $('div#P1').css('left', P_one_Att.left-horizontalMomentum+'px')
-          }
+  		var P_one_Att =  getpos('div#P1')
+  		if(P_one_Att.left<350&&horizontalMomentum<0){
+      		$('div#P1').css('left', P_one_Att.left-horizontalMomentum+'px')
+          $('div.stage').each(function(){
+          		var stage_Att = getpos(this)
+          		$(this).css('left', stage_Att.left-horizontalMomentum+'px')
+          })
+      }
+      if(P_one_Att.right>670&&horizontalMomentum>0){
+      		$('div#P1').css('left', P_one_Att.left-horizontalMomentum+'px')
+         	$('div.stage').each(function(){
+          		var stage_Att = getpos(this)
+              $(this).css('left', stage_Att.left-horizontalMomentum+'px')
+          })
+      }
   }
  function draw(){
  		gravity();
-    moveP_one();
     sidescroll();
+    moveP_one();
     requestAnimationFrame(draw);
 }
-$(document).ready(function(){
-	$('#startB').click(function(){
-  	$('div#screen').append('<button id="demoSB">demo</button>')
-    $('div#screen').css('background-color', '#6593F5')
-    $('#startB').remove()
-    $('#demoSB').click(function(){
-    	startUp();
-    	draw();
-    	$('div#screen').css('background-color', '#BB0F0A')
-      $('#demoSB').remove()
+  $(document).ready(function(){
+  	$('#startB').click(function(){
+    		$('div#screen').append('<button id="stageB">demo</button>')
+        $('#startB').remove()
     })
-	})
+  	//startUp();
+    //draw();
 });
