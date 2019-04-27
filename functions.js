@@ -80,3 +80,11 @@ function touching(sharkDude, boatDude){
 		return false;
 	}
 }
+function  stageMaker(top,left,height,width){
+		var value = '<div class="stage" style="top:'+top+'px; left:'+left+'px; height:'+height+'px; width:'+width+'px;"></div>'
+    return value
+}
+function spikeMaker(top, left, height, width){
+		var value = '<div class="spike" style="top:'+top+'px; left:'+left+'px;height:'+height+'px;width:'+width+'px;"></div>'
+    return value
+}
